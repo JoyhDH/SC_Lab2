@@ -51,6 +51,11 @@ namespace Lab2_Construction.Controllers
         [HttpPost]
         public ActionResult RegisterNewCard(LibraryCard newCard)
         {
+            if (newCard is null)
+            {
+                throw new ArgumentNullException(nameof(newCard));
+            }
+
             if (ModelState.IsValid)
             {
                 newCard.ID = db.LibraryCards.ToList().Count;
@@ -61,18 +66,6 @@ namespace Lab2_Construction.Controllers
             }
             return View(newCard);
         }
-
-        //[HttpGet]
-        //public ActionResult ReserveBook1(int ID)
-        //{
-        //    LibraryCard card = new LibraryCard();
-        //    db.Books.Find(ID).Availabe = false;
-        //    var result = db.LibraryCards.Find(card.ID);//.ResevedBooks.Add(BookID);
-        //    db.SaveChanges();
-        //    return View(result);
-        //        //$"Book {db.Books.Find(ViewBag.ID).Title} reserved by " +
-        //        //$"{db.LibraryCards.Find(Card).FirstName} {db.LibraryCards.Find(Card).LastName} successfully.";
-        //}
 
         public ActionResult ReserveBook(int? id)
         {
@@ -91,6 +84,11 @@ namespace Lab2_Construction.Controllers
         [HttpPost]
         public ActionResult ReserveBook(LibraryCard libraryCard)
         {
+            if (libraryCard is null)
+            {
+                throw new ArgumentNullException(nameof(libraryCard));
+            }
+
             bool check = true;
             for (int i = 0; i < db.LibraryCards.ToList().Count; i++)
             {
@@ -114,6 +112,7 @@ namespace Lab2_Construction.Controllers
 
         public ActionResult SearchReader(int ID)
         {
+
             ViewBag.ID = db.LibraryCards.Find(ID);
             return View();
         }
@@ -135,6 +134,11 @@ namespace Lab2_Construction.Controllers
         [HttpPost]
         public ActionResult ReceptionBook(LibraryCard Card)
         {
+            if (Card is null)
+            {
+                throw new ArgumentNullException(nameof(Card));
+            }
+
             if (ModelState.IsValid)
             {
                 db.LibraryCards.Find(Card.ID).ResevedBooks.Remove(Card.reservedBook);
