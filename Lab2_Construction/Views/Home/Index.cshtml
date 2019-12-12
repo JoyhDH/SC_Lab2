@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Lab2_Construction.Models.Book>
+
+@{
+    ViewBag.Title = Lab2_Construction.Resources.Resource_en1.Index;
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+
+@helper selected(string c, string culture)
+{
+    if (c == culture)
+    {
+        @:checked="checked"
+    }
+}
+    <h2>@Lab2_Construction.Resources.Resource_en1.Index</h2>
+@using (Html.BeginForm("SetCulture", "Home"))
+{
+    <fieldset>
+        <legend>@Lab2_Construction.Resources.Resource_en1.ChooseLanguage</legend>
+        <div class="control-group">
+            <div class="controls">
+                <label for="en-us">
+                    <input name="culture" id="en-us" value="en-us" type="radio" @selected("en-us", culture) /> English
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <label for="ru1">
+                    <input name="culture" id="ru1" value="ru1" type="radio" @selected("ru1", culture) /> Русский
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <label for="de1">
+                    <input name="culture" id="de1" value="de1" type="radio" @selected("de1", culture) /> Deutsch
+                </label>
+            </div>
+        </div>
+
+    </fieldset>
+
+
+}
+
+<p>
+    @Html.ActionLink(Lab2_Construction.Resources.Resource_en1.RegisterNewCard, "RegisterNewCard")
+</p>
+
+<p>
+    @Html.ActionLink(Lab2_Construction.Resources.Resource_en1.ReceptionBook, "ReceptionBook")
+</p>
+
+<p>
+    @Html.ActionLink(Lab2_Construction.Resources.Resource_en1.ReaderList, "ReadersList")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Available)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Available)
+            </td>
+            <td>
+                @Html.ActionLink(Lab2_Construction.Resources.Resource_en1.ReserveBook, "ReserveBook", new { id = item.ID }) |
+                @Html.ActionLink(Lab2_Construction.Resources.Resource_en1.ReceptionBook, "ReceptionBook", new { id = item.ID }) |
+            </td>
+        </tr>
+    }
+
+</table>
